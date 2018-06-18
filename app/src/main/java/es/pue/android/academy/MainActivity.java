@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHelper = new StudentSqliteHelper(this, Constants.DB_NAME, null, 1);
+        dbHelper = new StudentSqliteHelper(this, Constants.DB_NAME, null, Constants.DB_VERSION);
         db = dbHelper.getWritableDatabase();
 
         studentAdapter = new StudentAdapter(this, R.layout.student_item, getAllStudents());
