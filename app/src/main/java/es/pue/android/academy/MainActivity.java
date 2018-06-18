@@ -1,10 +1,12 @@
 package es.pue.android.academy;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -52,5 +54,21 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
 
         return students;
+    }
+
+    public void addStudent(View view) {
+        if (null != db) {
+            ContentValues rowStudent = new ContentValues();
+            rowStudent.put("name", "Steve Jobs");
+            rowStudent.put("age", 53);
+
+            db.insert("students", null, rowStudent);
+        }
+    }
+
+    public void updateStudent(View view) {
+    }
+
+    public void deleteStudent(View view) {
     }
 }
