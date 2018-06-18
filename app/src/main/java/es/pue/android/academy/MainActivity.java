@@ -49,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
                 refreshStudentsList();
             }
         });
+
+        Button btnUpdateStudent = findViewById(R.id.btnUpdateStudent);
+        btnUpdateStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateStudent();
+                refreshStudentsList();
+            }
+        });
     }
 
     private void getAllStudents() {
@@ -81,9 +90,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void updateStudent(View view) {
+    public void updateStudent() {
+        if (null != db) {
+            ContentValues rowStudent = new ContentValues();
+            rowStudent.put("age", 35);
+
+            db.update("students", rowStudent, "ID = ?", new String[]{"1"});
+        }
+
     }
 
-    public void deleteStudent(View view) {
+    public void deleteStudent() {
+
     }
 }
