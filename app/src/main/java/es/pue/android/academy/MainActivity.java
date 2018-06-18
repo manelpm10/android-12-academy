@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import es.pue.android.academy.model.Student;
 public class MainActivity extends AppCompatActivity {
 
     // Ouch! All in view pattern.
+    private List<Student> students;
     private ListView lvStudents;
     private StudentAdapter studentAdapter;
     private SQLiteDatabase db;
@@ -32,15 +34,24 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new StudentSqliteHelper(this, Constants.DB_NAME, null, Constants.DB_VERSION);
         db = dbHelper.getWritableDatabase();
 
-        studentAdapter = new StudentAdapter(this, R.layout.student_item, getAllStudents());
+        students = new ArrayList<>();
+        getAllStudents();
+        studentAdapter = new StudentAdapter(this, R.layout.student_item, students);
 
         lvStudents = findViewById(R.id.lvStudents);
         lvStudents.setAdapter(studentAdapter);
 
+        Button btnAddStudent = findViewById(R.id.btnAddStudent);
+        btnAddStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addStudent();
+                refreshStudentsList();
+            }
+        });
     }
 
-    private List<Student> getAllStudents() {
-        List<Student> students = new ArrayList<>();
+    private void getAllStudents() {
         Cursor cursor = db.rawQuery("SELECT * FROM students", null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
@@ -52,11 +63,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         cursor.close();
-
-        return students;
     }
 
-    public void addStudent(View view) {
+    private void refreshStudentsList() {
+        students.clear();
+        getAllStudents();
+        studentAdapter.notifyDataSetChanged();
+    }
+
+    private void addStudent() {
         if (null != db) {
             ContentValues rowStudent = new ContentValues();
             rowStudent.put("name", "Steve Jobs");
