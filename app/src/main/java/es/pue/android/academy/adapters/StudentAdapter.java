@@ -52,13 +52,14 @@ public class StudentAdapter extends BaseAdapter {
             vh = new ViewHolder();
             vh.tvName = convertView.findViewById(R.id.tvName);
             vh.tvAge = convertView.findViewById(R.id.tvAge);
+            convertView.setTag(vh);
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
 
         Student student = (Student) this.getItem(position);
         vh.tvName.setText(student.getName());
-        vh.tvAge.setText(String.format("%s", student.getAge()));
+        vh.tvAge.setText(String.valueOf(student.getAge()));
 
         return convertView;
     }
