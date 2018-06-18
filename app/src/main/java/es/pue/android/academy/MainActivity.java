@@ -17,7 +17,6 @@ import es.pue.android.academy.model.Student;
 public class MainActivity extends AppCompatActivity {
 
     // Ouch! All in view pattern.
-    private List<Student> students;
     private ListView lvStudents;
     private StudentAdapter studentAdapter;
     private SQLiteDatabase db;
@@ -31,26 +30,27 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new StudentSqliteHelper(this, Constants.DB_NAME, null, 1);
         db = dbHelper.getWritableDatabase();
 
-        students = new ArrayList<>();
-        getAllStudents();
-        studentAdapter = new StudentAdapter(this, R.layout.student_item, students);
+        studentAdapter = new StudentAdapter(this, R.layout.student_item, getAllStudents());
 
         lvStudents = findViewById(R.id.lvStudents);
         lvStudents.setAdapter(studentAdapter);
 
     }
 
-    private void getAllStudents() {
+    private List<Student> getAllStudents() {
+        List<Student> students = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM students", null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 String name = cursor.getString(cursor.getColumnIndex("name"));
-                int age = cursor.getInt(cursor.getColumnIndex("name"));
+                int age = cursor.getInt(cursor.getColumnIndex("age"));
 
                 students.add(new Student(name, age));
                 cursor.moveToNext();
             }
         }
         cursor.close();
+
+        return students;
     }
 }
