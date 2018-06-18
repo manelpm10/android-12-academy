@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             rowStudent.put("name", "Steve Jobs");
             rowStudent.put("age", 53);
 
-            db.insert("students", null, rowStudent);
+            db.insert(Constants.TABLE_STUDENT, null, rowStudent);
         }
     }
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             ContentValues rowStudent = new ContentValues();
             rowStudent.put("age", 35);
 
-            db.update("students", rowStudent, "ID = ?", new String[]{"1"});
+            db.update(Constants.TABLE_STUDENT, rowStudent, "ID = ?", new String[]{"1"});
         }
 
     }

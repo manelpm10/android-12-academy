@@ -4,14 +4,16 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import es.pue.android.academy.Constants;
+
 public class StudentSqliteHelper extends SQLiteOpenHelper {
 
-    String sqlCreate = "CREATE TABLE students (" +
+    String sqlCreate = "CREATE TABLE "+ Constants.TABLE_STUDENT+" (" +
             "    ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
             "    name TEXT NOT NULL," +
             "    age INT" +
             ")";
-    String sqlDrop = "DROP TABLE IF EXISTS students";
+    String sqlDrop = "DROP TABLE IF EXISTS "+Constants.TABLE_STUDENT;
 
     public StudentSqliteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
