@@ -58,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
                 refreshStudentsList();
             }
         });
+
+        Button btnDeleteStudent = findViewById(R.id.btnDeleteStudent);
+        btnDeleteStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteStudent();
+                refreshStudentsList();
+            }
+        });
     }
 
     private void getAllStudents() {
@@ -101,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteStudent() {
-
+        if (null != db) {
+            db.delete(Constants.TABLE_STUDENT, "ID = ?", new String[]{"1"});
+        }
     }
 }
